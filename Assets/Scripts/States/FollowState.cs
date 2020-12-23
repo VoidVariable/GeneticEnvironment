@@ -18,17 +18,12 @@ public class FollowState : State
         this.target = target;
     }
 
-    public override void StateStart(Creature creature)
-    {
-        base.StateStart(creature);       
-    }
-
     public override void StateUpdate()
     {
 
         if (target == null)
         {
-            current.stateM.ChangeState(new WanderState(), current);
+            current.stateM.ChangeState(new WanderState(8), current);
             return;
         }
 

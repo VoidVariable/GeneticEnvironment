@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class MateState : State
 {
-    StateMachine stateM;
+    StateMachine stateM = new StateMachine();
 
     protected override string text => ";)";
 
-    public override void StateExit()
+    public override void StateStart(Creature creature)
     {
-        throw new System.NotImplementedException();
+        base.StateStart(creature);
+        stateM = new StateMachine();
+        stateM.ChangeState(new WanderState(9, SendMatingMessage), creature);
     }
 
-    public void StateStart()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void StateUpdate(Creature c)
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void StateExit() {    }
 
     public override void StateUpdate()
     {
-        throw new System.NotImplementedException();
+
     }
+
+    public void SendMatingMessage(GameObject target)
+    {
+        if (current.testedMates.Contains(target))
+        {
+            return;
+        }
+        if (current.dna.Stnd.CheckCompatibility(target.GetComponent<Creature>().dna, avail))
+        {
+            return target.GetComponent<Creature>().RespontToMatingMessage(target);
+        }
+        current.testedMates.Add(target);
+        return false;
+
+    }
+
 }

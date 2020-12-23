@@ -41,7 +41,7 @@ public class Creature : MonoBehaviour
         avail = 0;
 
         stateM = new StateMachine();
-        stateM.ChangeState(new WanderState(),this);
+        stateM.ChangeState(new WanderState(8),this);
 
         Health = dna.health;
         Speed = dna.speed;
@@ -86,20 +86,7 @@ public class Creature : MonoBehaviour
         target.testedMates.Clear();
     }
 
-    public bool SendMatingMessage(GameObject target)
-    {
-        if (testedMates.Contains(target))
-        {
-            return false;
-        }
-        if (dna.Stnd.CheckCompatibility(target.GetComponent<Creature>().dna, avail))
-        {
-            return target.GetComponent<Creature>().RespontToMatingMessage(target);          
-        }
-        testedMates.Add(target);
-        return false;
-
-    }
+   
 
     public bool RespontToMatingMessage(GameObject target)
     {   
@@ -118,6 +105,10 @@ public class Creature : MonoBehaviour
     void Update()
     {
         t.text = Health + "";
+        if (avail > 50)
+            stateM.ChangeState(new MateState(), this);
+
+
 
         if (Health <= 0)
         {
@@ -139,6 +130,10 @@ public class Creature : MonoBehaviour
         StartCoroutine("DieInside");
     }
 
+    public void ChangeToFollow(GameObject target)
+    {
+        stateM.ChangeState(new FollowState(target), this);
+    }
 
 }
 
