@@ -50,19 +50,7 @@ public class InfoPanel : MonoBehaviour
             return;
         }
 
-        switch (selected._state)
-        {
-            case CreatureStates.Wander:
-                state.text = "Searching...";
-                break;
-            case CreatureStates.Follow:
-                state.text = "Food...";
-                break;
-            case CreatureStates.Mate:
-                state.text = "Mate...";
-                break;
-
-        }
+        state.text = selected.stateM.currentState.ToString();
     }
 
     private void SelectCreature()
