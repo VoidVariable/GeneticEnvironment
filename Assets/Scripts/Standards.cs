@@ -47,16 +47,12 @@ public struct Standards
             a: SimVars.minSize, b: SimVars.maxSize, c: -100, d: 100);
         value += sizePercent * this.SizeWeight;
 
-        UnityEngine.Debug.Log(value);
-
         //Size Value
         float speedPercent = MUtils.GetMappedValue(dna.speed,
             a: SimVars.minSpeed, b: SimVars.maxSpeed, c: -100, d: 100);
-        UnityEngine.Debug.Log(this.SpeedWeight);
         value += speedPercent * this.SpeedWeight;
 
 
-        UnityEngine.Debug.Log(value);
         if (value > availPercent)
             return true;
 

@@ -14,8 +14,7 @@ public class Creature : MonoBehaviour
     float health;
     int avail = 0;
 
-    [SerializeField]
-    private CreatureStates _state;
+    public CreatureStates _state;
 
 
     private Vector3 movementVector;
@@ -95,36 +94,46 @@ public class Creature : MonoBehaviour
     public void WanderState()
     {
 
+        //Check for egde of map and turn around
         RaycastHit hit;
         if (!Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0, -0.3f, -1)), out hit, Mathf.Infinity))
         {
             transform.eulerAngles = new Vector3(0, Random.Range(0,360), 0);
         }
 
+
+        //Random rotation
         int turn = Random.Range(0,1000);
         if(turn < 10)
         {
             transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
         }
-
+        //Move
         transform.position += (transform.rotation * -Vector3.forward) * speed * Time.deltaTime;
 
+
+        
         if (target == null)
         {
             int layerId = 0;
 
+            //If doest need to mate or is to hungry to do so
             if (avail < 50 || health < 50)
             {
+                //Food
                  layerId = 8;
             }
             else
             {
+                //Creature
                  layerId = 9;
                
             }
             int layerMask = 1 << layerId;
-
+          
             Collider[] targets = Physics.OverlapSphere(transform.position, 10, layerMask); 
+            
+            
             if (targets.Length > 0)
             {
                 target = targets[0].gameObject;
@@ -144,6 +153,9 @@ public class Creature : MonoBehaviour
 
     }
 
+
+
+
     public void FollowState()
     {
 
@@ -153,7 +165,7 @@ public class Creature : MonoBehaviour
             return; 
         }
 
-        transform.position = Vector3.MoveTowards(transform.position,target.transform.position, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position,target.transform.position, 0.07f);
         
         int layerId = 8;
         int layerMask = 1 << layerId;
@@ -165,6 +177,8 @@ public class Creature : MonoBehaviour
             Destroy(target);
         }
     }
+
+
 
 
     // Mating Function. Tenho de fazer um script para isto

@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatureSelect : MonoBehaviour
 {
     public Creature selectedCreature;
-    
+
+    public event Action OnCreatureSelect;
+
     // Update is called once per frame
     void Update()
     {
@@ -14,9 +17,14 @@ public class CreatureSelect : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 200.0f))
+
+            int layerId = 9;
+            int layerMask = 1 << layerId;
+
+            if (Physics.Raycast(ray, out hit, 200.0f, layerMask))
             {
-                selectedCreature =  hit.collider.gameObject.transform.parent.GetComponent<Creature>();
+                selectedCreature =  hit.collider.gameObject.GetComponent<Creature>();
+                OnCreatureSelect?.Invoke();
             }
         }
 
