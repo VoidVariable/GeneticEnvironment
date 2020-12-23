@@ -9,9 +9,9 @@ public class Creature : MonoBehaviour
 
     public DNA dna;
 
-    float speed;
-    float size;
-    float health;
+    public float Speed { get; private set; }
+    public float Size { get; private set; }
+    public float Health { get; private set; }
     int avail = 0;
 
     public CreatureStates _state;
@@ -28,21 +28,28 @@ public class Creature : MonoBehaviour
 
     WaitForSeconds justWait = new WaitForSeconds(0.3f);
 
+
+    //Movement 
+    public bool token;
+    private Vector3 startPos;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("DieInside");
         avail = 0;
         _state = CreatureStates.Wander;
-        health = dna.health;
-        speed = dna.speed;
-        size = dna.size;
+
+        Health = dna.health;
+        Speed = dna.speed;
+        Size = dna.size;
+
         transform.localScale = new Vector3(1,1,1);
-        transform.localScale *= size;
+        transform.localScale *= Size;
         movementVector = new Vector3(0, 0, 0);
         target = null;
 
-        ChangeColor(GetColor(speed));
+        ChangeColor(GetColor(Speed));
     }
 
     public void ChangeColor(Color selfColor)
@@ -55,9 +62,9 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t.text = health + "";
+        t.text = Health + "";
 
-        if (health <= 0) 
+        if (Health <= 0) 
         { 
             this.enabled = false;
             ChangeColor(Color.black);
@@ -108,8 +115,9 @@ public class Creature : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
         }
+
         //Move
-        transform.position += (transform.rotation * -Vector3.forward) * speed * Time.deltaTime;
+        transform.position += (transform.rotation * -Vector3.forward) * Speed * Time.deltaTime;
 
 
         
@@ -118,7 +126,7 @@ public class Creature : MonoBehaviour
             int layerId = 0;
 
             //If doest need to mate or is to hungry to do so
-            if (avail < 50 || health < 50)
+            if (avail < 50 || Health < 50)
             {
                 //Food
                  layerId = 8;
@@ -139,13 +147,16 @@ public class Creature : MonoBehaviour
                 target = targets[0].gameObject;
 
                 if (target.tag == "Food")
+                {
+                    token = false;
                     _state = CreatureStates.Follow;
+                }
                 else
                 {
                     if (SendMatingMessage(target))
                         _state = CreatureStates.Mate;
                     else
-                        testedMates.Add(target);                     
+                        testedMates.Add(target);
                 }
             }
 
@@ -159,22 +170,32 @@ public class Creature : MonoBehaviour
     public void FollowState()
     {
 
+
         if(target == null)
         {
+
             _state = CreatureStates.Wander;
             return; 
         }
 
-        transform.position = Vector3.MoveTowards(transform.position,target.transform.position, 0.07f);
-        
+        if (!token)
+        {
+            startPos = transform.position; 
+            token = true;
+        }
+
+
+        transform.position = Vector3.MoveTowards(startPos, target.transform.position, 0.07f);
+
         int layerId = 8;
         int layerMask = 1 << layerId;
 
 
         if (Physics.OverlapSphere(transform.position, 1 + transform.localScale.x, layerMask).Length > 0)
         {
-            health += 10;
+            Health += 10;          
             Destroy(target);
+
         }
     }
 
@@ -199,6 +220,7 @@ public class Creature : MonoBehaviour
         _state = CreatureStates.Wander;
     }
 
+
     public bool SendMatingMessage(GameObject target)
     {
         if (testedMates.Contains(target))
@@ -214,6 +236,7 @@ public class Creature : MonoBehaviour
 
     }
 
+
     public bool RespontToMatingMessage(GameObject target)
     {   
         if(dna.Stnd.CheckCompatibility(target.GetComponent<Creature>().dna, avail))
@@ -227,13 +250,13 @@ public class Creature : MonoBehaviour
 
     }
 
-    //
+    
 
 
     public IEnumerator DieInside()
     {
         yield return justWait;
-        health--;
+        Health--;
         avail++;
         StartCoroutine("DieInside");
     }
