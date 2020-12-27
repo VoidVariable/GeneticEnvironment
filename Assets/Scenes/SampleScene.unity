@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   food: {fileID: 5420311403912642544, guid: bc4fbe0742e3dc5459a56733a09cb39d, type: 3}
-  maxFood: 30
+  maxFood: 20
 --- !u!114 &1629492580
 MonoBehaviour:
   m_ObjectHideFlags: 0

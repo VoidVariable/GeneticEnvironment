@@ -2,21 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine 
+public abstract class StateMachine 
 {
     public State currentState;
+    protected Creature dude;
 
-    public void ChangeState(State newState, Creature creature)
+    protected StateMachine(Creature creature)
     {
+        dude = creature;
+    }
+
+    public void ChangeState(State newState, GameObject target)
+    {       
         if (currentState != null)
             currentState.StateExit();
 
         currentState = newState;
-        currentState.StateStart(creature);
+        currentState.StateStart(dude, target);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (currentState != null) currentState.StateUpdate();
     }
+
 }

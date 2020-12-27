@@ -14,14 +14,12 @@ public class Creature : MonoBehaviour
     public float Health { get; set; }
     public int avail = 0;
 
-  
+
     //States
-    public StateMachine stateM;
+    public StateMachine brain;
 
 
     private Vector3 movementVector;
-
-    public TextMeshPro t;
 
 
     public List<GameObject> testedMates;
@@ -36,13 +34,9 @@ public class Creature : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        brain = new CreatureBrain(this);
         StartCoroutine("DieInside");
-        avail = 0;
-
-        stateM = new StateMachine();
-        stateM.ChangeState(new WanderState(8),this);
-
+        avail = 0;      
         Health = dna.health;
         Speed = dna.speed;
         Size = dna.size;
@@ -87,7 +81,6 @@ public class Creature : MonoBehaviour
     }
 
    
-
     public bool RespontToMatingMessage(GameObject target)
     {   
         if(dna.Stnd.CheckCompatibility(target.GetComponent<Creature>().dna, avail))
@@ -104,21 +97,13 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t.text = Health + "";
-        if (avail > 50)
-            stateM.ChangeState(new MateState(), this);
-
-
-
         if (Health <= 0)
         {
             this.enabled = false;
             ChangeColor(Color.black);
 
         }
-
-        stateM.Update();
-
+        brain.Update();
     }
 
 
@@ -130,10 +115,6 @@ public class Creature : MonoBehaviour
         StartCoroutine("DieInside");
     }
 
-    public void ChangeToFollow(GameObject target)
-    {
-        stateM.ChangeState(new FollowState(target), this);
-    }
 
 }
 

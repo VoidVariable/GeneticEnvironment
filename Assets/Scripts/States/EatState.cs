@@ -2,33 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowState : State
+public class EatState : State
 {
-
-    GameObject target;
-
     protected override string text => "FOOD";
 
     public override void StateExit()
     {
-
-    }
-
-    public FollowState(GameObject target)
-    {
-        this.target = target;
+        
     }
 
     public override void StateUpdate()
     {
+
         if (target == null)
         {
             current.brain.ChangeState(new WanderState(), null);
-            return;
         }
+        
+        current.transform.position = Vector3.MoveTowards(current.transform.position, target.transform.position, current.Speed * Time.deltaTime);
 
-        current.transform.position = 
-            Vector3.MoveTowards(current.transform.position, target.transform.position, current.Size * Time.deltaTime);
+
+
         //current.transform.LookAt(current.target.transform.position);
 
         int layerId = 8;
@@ -37,8 +31,10 @@ public class FollowState : State
 
         if (Physics.OverlapSphere(current.transform.position, 1 + current.transform.localScale.x, layerMask).Length > 0)
         {
-            current.Health += 10; 
-            Object.Destroy(target);   
+            current.Health += 10;
+            Object.Destroy(target);
         }
+
     }
+
 }

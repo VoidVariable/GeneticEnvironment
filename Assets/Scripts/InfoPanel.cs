@@ -44,13 +44,13 @@ public class InfoPanel : MonoBehaviour
     private void PrintState()
     {
 
-        if(selected.Health <= 0)
+        if(selected.Health <= -400)
         {
             state.text = "DEAD";
             return;
         }
 
-        state.text = selected.stateM.currentState.ToString();
+        state.text = selected.brain.currentState.ToString();
     }
 
     private void SelectCreature()
