@@ -9,6 +9,7 @@ public class WanderState : State
 
     public override void StateExit()
     {
+    
     }
 
     public override void StateUpdate()

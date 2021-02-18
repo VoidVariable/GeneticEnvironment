@@ -11,7 +11,6 @@ public class CreatureBrain : StateMachine
     private Dictionary<string,int> priorities;
     private Dictionary<string, State> states;
 
-    
     public CreatureBrain(Creature creature): base(creature: creature)
     {
         
@@ -41,33 +40,42 @@ public class CreatureBrain : StateMachine
         }
         priorities["Wander"] = 1;
 
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 8 | 1 << 9;
 
         targets = Physics.OverlapSphere(dude.transform.position, 10, layerMask);
 
         //This needs rework
         if (targets.Length > 0)
         {
-            //Handle Dudes          
+            //Handle           
             if (dude.Health < (dude.dna.health * 0.5f))
             {
-                priorities["Eat"] += 2;
-            }  
-        }
+                priorities["Eat"] += 3;
+            } 
+            
+            if(dude.avail > 50)
+            {
+                priorities["Mate"] += 2;
+            }
 
-        
+        }   
 
         //See what state has the largest priority
         string key = priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
         State newState = states[key];
 
+
         if (newState.GetType() != currentState.GetType())
         {
             target = GetTarget(key);
-            ChangeState(newState, target);
+            if (target != null)
+            {
+                ChangeState(newState, target);
+            }
         }
 
     }
+
 
     private GameObject GetTarget(string key)
     {
@@ -80,10 +88,26 @@ public class CreatureBrain : StateMachine
                         return c.gameObject;
                 }
                 return null;
+            case "Mate":
+                foreach (Collider c in targets)
+                {
+                    if (c.gameObject.tag == "Player" && c.gameObject != dude.gameObject)
+                    {
+                        if (!dude.testedMates.Contains(c.GetComponent<Creature>()))
+                        {
+                            return c.gameObject;
+                        }    
+                    }
+                }
+                return null;
             default:
                 return null;
 
         }
     }
+
+    
+
+
 }
 

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Creature : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class Creature : MonoBehaviour
     private Vector3 movementVector;
 
 
-    public List<GameObject> testedMates;
+    public List<Creature> testedMates;
 
     WaitForSeconds justWait = new WaitForSeconds(0.3f);
 
@@ -30,6 +31,7 @@ public class Creature : MonoBehaviour
     //Movement 
     public bool token;
     private Vector3 startPos;
+    public string CreatureName { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,17 @@ public class Creature : MonoBehaviour
         transform.localScale *= Size;
         movementVector = new Vector3(0, 0, 0);
 
+
+        //Select Name From TextFile
+        using (StreamReader sr = new StreamReader("Assets/Resources/CreaturesNames.txt"))
+        {
+           int index = Random.Range(0, 50);
+
+            for (int i = 1; i < index; i++)
+                sr.ReadLine();
+            CreatureName = sr.ReadLine();
+        }
+        
         ChangeColor(GetColor(Speed));
     }
 
@@ -81,18 +94,24 @@ public class Creature : MonoBehaviour
     }
 
    
-    public bool RespontToMatingMessage(GameObject target)
+    public bool RespontToMatingMessage(Creature target)
     {   
-        if(dna.Stnd.CheckCompatibility(target.GetComponent<Creature>().dna, avail))
+        if(dna.Stnd.CheckCompatibility(target.dna, avail))
         {
             return true;
         }
 
+        MateState m = new MateState();
+        m.type = true;
+
+        brain.ChangeState(m, target.gameObject);
         testedMates.Add(target);
 
-        return false;
+        return true;
 
     }
+
+
 
     // Update is called once per frame
     void Update()

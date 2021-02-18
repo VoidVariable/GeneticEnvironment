@@ -11,10 +11,8 @@ public class InfoPanel : MonoBehaviour
     private Creature selected;
     private DNA _dna;
 
-
-
     [SerializeField]
-    private Text state;
+    private Text state, nameText;
     [SerializeField]
     private Text speed, size, health;
 
@@ -29,7 +27,6 @@ public class InfoPanel : MonoBehaviour
     {
 
         if (selected == null) return;
-        
 
         //mudar isto 
         _dna = selected.dna;
@@ -38,7 +35,7 @@ public class InfoPanel : MonoBehaviour
         health.text = "Health: " + _dna.health + " / " + selected.Health;
 
         PrintState();
-        
+        nameText.text = selected.CreatureName;
     }
 
     private void PrintState()

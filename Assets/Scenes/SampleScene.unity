@@ -401,6 +401,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231101831}
   m_CullTransparentMesh: 0
+--- !u!1 &259842437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 259842438}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &259842438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259842437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.204746, y: 9.439857, z: 18.155592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &268139924
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +598,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 5
-  m_Spacing: 0
+  m_Spacing: 34.47
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -626,12 +656,12 @@ GameObject:
   - component: {fileID: 411354541}
   - component: {fileID: 411354540}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &411354539
 RectTransform:
   m_ObjectHideFlags: 0
@@ -647,9 +677,9 @@ RectTransform:
   m_Father: {fileID: 326239049}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 6588.1973, y: -149.7699}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2033.8066, y: 499.65332}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &411354540
@@ -967,6 +997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cSelect: {fileID: 268139926}
   state: {fileID: 18169272}
+  nameText: {fileID: 2087989405}
   speed: {fileID: 1617968462}
   size: {fileID: 1502998897}
   health: {fileID: 231101833}
@@ -1044,7 +1075,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.7e-41, z: 0, w: 2.140625}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1787,7 +1818,7 @@ GameObject:
   - component: {fileID: 1427887555}
   - component: {fileID: 1427887554}
   m_Layer: 5
-  m_Name: Image
+  m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2042,7 +2073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creaturePrefab: {fileID: 3215710045750935274, guid: 5e372b0615572404cb90caf20aa162aa,
     type: 3}
-  generationSize: 15
+  generationSize: 4
 --- !u!4 &1629492578
 Transform:
   m_ObjectHideFlags: 0

@@ -18,10 +18,10 @@ public class EatState : State
         {
             current.brain.ChangeState(new WanderState(), null);
         }
-        
-        current.transform.position = Vector3.MoveTowards(current.transform.position, target.transform.position, current.Speed * Time.deltaTime);
-
-
+        else
+        {
+            current.transform.position = Vector3.MoveTowards(current.transform.position, target.transform.position, current.Speed * Time.deltaTime);
+        }
 
         //current.transform.LookAt(current.target.transform.position);
 
@@ -31,7 +31,7 @@ public class EatState : State
 
         if (Physics.OverlapSphere(current.transform.position, 1 + current.transform.localScale.x, layerMask).Length > 0)
         {
-            current.Health += 10;
+            current.Health += 50;
             Object.Destroy(target);
         }
 
