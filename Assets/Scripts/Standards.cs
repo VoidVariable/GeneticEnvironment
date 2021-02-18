@@ -47,13 +47,14 @@ public struct Standards
             a: SimVars.minSize, b: SimVars.maxSize, c: -100, d: 100);
         value += sizePercent * this.SizeWeight;
 
-        //Size Value
+        //Speed Value
         float speedPercent = MUtils.GetMappedValue(dna.speed,
             a: SimVars.minSpeed, b: SimVars.maxSpeed, c: -100, d: 100);
         value += speedPercent * this.SpeedWeight;
 
+        Debug.Log(value);
 
-        if (value > availPercent)
+        if (value < availPercent)
             return true;
 
         return false;

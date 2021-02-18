@@ -7,14 +7,17 @@ using UnityEngine.UI;
 public class InfoPanel : MonoBehaviour
 {
 
-    public CreatureSelect cSelect;
+    [SerializeField]
+    private CreatureSelect cSelect = default;
     private Creature selected;
     private DNA _dna;
 
     [SerializeField]
-    private Text state, nameText;
+    private Text state = default, nameText = default;
     [SerializeField]
-    private Text speed, size, health;
+    private Text speed = default, 
+        size = default,
+        health= default;
 
 
     private void Awake()
@@ -29,13 +32,9 @@ public class InfoPanel : MonoBehaviour
         if (selected == null) return;
 
         //mudar isto 
-        _dna = selected.dna;
-        speed.text = "Speed: " + string.Format("{0:0.000}", _dna.speed) + "m/s";
-        size.text = "Size: " +  string.Format( "{0:0.000}" ,_dna.size) + "m";
-        health.text = "Health: " + _dna.health + " / " + selected.Health;
-
+        
         PrintState();
-        nameText.text = selected.CreatureName;
+       
     }
 
     private void PrintState()
@@ -53,6 +52,13 @@ public class InfoPanel : MonoBehaviour
     private void SelectCreature()
     {
         selected = cSelect.selectedCreature;
+
+        nameText.text = selected.CreatureName;
+
+        _dna = selected.dna;
+        speed.text = "Speed: " + string.Format("{0:0.000}", _dna.speed) + "m/s";
+        size.text = "Size: " + string.Format("{0:0.000}", _dna.size) + "m";
+        health.text = "Health: " + _dna.health + " / " + selected.Health;
     }
 
 }

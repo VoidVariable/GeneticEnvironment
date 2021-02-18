@@ -25,9 +25,9 @@ public class DNA
         float[] values  = new float[] {1 , Random.Range(0, 1f), 0};
 
         
-        float value1 = values[0] - values[1] * MUtils.ApplyPolarity();
+        float value1 = (values[0] - values[1]) * MUtils.ApplyPolarity();
 
-        float value2 = values[1] - values[2] * MUtils.ApplyPolarity();
+        float value2 = (values[1] - values[2]) * MUtils.ApplyPolarity();
 
         Stnd = new Standards(value1, value2);
     }

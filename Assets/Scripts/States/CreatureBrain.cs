@@ -53,7 +53,7 @@ public class CreatureBrain : StateMachine
                 priorities["Eat"] += 3;
             } 
             
-            if(dude.avail > 50)
+            if(dude.Avail > 50)
             {
                 priorities["Mate"] += 2;
             }

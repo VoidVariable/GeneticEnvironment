@@ -13,7 +13,13 @@ public class Creature : MonoBehaviour
     public float Speed { get; private set; }
     public float Size { get; private set; }
     public float Health { get; set; }
-    public int avail = 0;
+
+    private int avail;
+    public int Avail 
+    { 
+        get { return avail; } 
+        set { avail = Mathf.Min(value, 100); } 
+    }
 
 
     //States
@@ -107,7 +113,7 @@ public class Creature : MonoBehaviour
         brain.ChangeState(m, target.gameObject);
         testedMates.Add(target);
 
-        return true;
+        return false;
 
     }
 
@@ -129,8 +135,8 @@ public class Creature : MonoBehaviour
     public IEnumerator DieInside()
     {
         yield return justWait;
-        Health--;
-        avail++;
+        Health--;      
+        Avail++;
         StartCoroutine("DieInside");
     }
 
