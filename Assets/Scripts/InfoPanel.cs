@@ -30,9 +30,9 @@ public class InfoPanel : MonoBehaviour
     {
 
         if (selected == null) return;
-
+        health.text = "Health: " + _dna.health + " / " + selected.Health;
         //mudar isto 
-        
+
         PrintState();
        
     }
@@ -58,7 +58,7 @@ public class InfoPanel : MonoBehaviour
         _dna = selected.dna;
         speed.text = "Speed: " + string.Format("{0:0.000}", _dna.speed) + "m/s";
         size.text = "Size: " + string.Format("{0:0.000}", _dna.size) + "m";
-        health.text = "Health: " + _dna.health + " / " + selected.Health;
+       
     }
 
 }

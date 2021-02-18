@@ -2920,7 +2920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creaturePrefab: {fileID: 3215710045750935274, guid: 5e372b0615572404cb90caf20aa162aa,
     type: 3}
-  generationSize: 4
+  generationSize: 7
 --- !u!4 &1629492578
 Transform:
   m_ObjectHideFlags: 0
@@ -2948,7 +2948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   food: {fileID: 5420311403912642544, guid: bc4fbe0742e3dc5459a56733a09cb39d, type: 3}
-  maxFood: 20
+  maxFood: 10
 --- !u!114 &1629492580
 MonoBehaviour:
   m_ObjectHideFlags: 0
