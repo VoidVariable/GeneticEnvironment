@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class StateMachine 
 {
     public State currentState;
-    protected Creature dude;
+    protected Creature creature;
 
     protected StateMachine(Creature creature)
     {
-        dude = creature;
+        this.creature = creature;
     }
 
     public void ChangeState(State newState, GameObject target)
@@ -18,7 +18,7 @@ public abstract class StateMachine
             currentState.StateExit();
 
         currentState = newState;
-        currentState.StateStart(dude, target);
+        currentState.StateStart(creature, target);
     }
 
     public virtual void Update()

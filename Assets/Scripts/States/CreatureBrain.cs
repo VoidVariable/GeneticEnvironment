@@ -26,7 +26,7 @@ public class CreatureBrain : StateMachine
         states.Add("Wander", new WanderState());
         states.Add("Eat", new EatState());
         states.Add("Mate", new MateState());
-
+        states.Add("Dead", new DeadState());
     }
 
 
@@ -42,18 +42,18 @@ public class CreatureBrain : StateMachine
 
         int layerMask = 1 << 8 | 1 << 9;
 
-        targets = Physics.OverlapSphere(dude.transform.position, 10, layerMask);
+        targets = Physics.OverlapSphere(creature.transform.position, 10, layerMask);
 
         //This needs rework
         if (targets.Length > 0)
         {
             //Handle           
-            if (dude.Health < (dude.dna.health * 0.5f))
+            if (creature.Health < (creature.dna.health * 0.5f))
             {
                 priorities["Eat"] += 3;
             } 
             
-            if(dude.Avail > 50)
+            if(creature.Avail > 50)
             {
                 priorities["Mate"] += 2;
             }
@@ -74,6 +74,11 @@ public class CreatureBrain : StateMachine
             }
         }
 
+        if(creature.Health <= 0)
+        {
+            ChangeState(states["Dead"], null);
+        }
+
     }
 
 
@@ -91,9 +96,11 @@ public class CreatureBrain : StateMachine
             case "Mate":
                 foreach (Collider c in targets)
                 {
-                    if (c.gameObject.tag == "Player" && c.gameObject != dude.gameObject)
+                    if (c.gameObject.tag == "Player" && c.gameObject != creature.gameObject)
                     {
-                        if (!dude.testedMates.Contains(c.GetComponent<Creature>()))
+                        Creature test = c.GetComponent<Creature>();
+                        if (test.Health <= 0) continue;
+                        if (!creature.testedMates.Contains(test))
                         {
                             return c.gameObject;
                         }    

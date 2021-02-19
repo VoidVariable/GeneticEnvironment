@@ -126,7 +126,7 @@ public class Creature : MonoBehaviour
         {
             this.enabled = false;
             ChangeColor(Color.black);
-
+            StopCoroutine("DieInside");
         }
         brain.Update();
     }

@@ -5,22 +5,32 @@ using UnityEngine;
 
 public class FollowSelected : MonoBehaviour
 {
+    [SerializeField]
+    private CreatureSelect s;
 
-    public CreatureSelect s;
+    [SerializeField]
+    private CinemachineVirtualCamera virtCam;
 
-    public CinemachineVirtualCamera virtCam;
-  
+    private Transform target;
+
+    private void Awake()
+    {
+        s.OnCreatureFollow += () =>
+        {
+            target = s.selectedCreature.gameObject.transform;
+        };
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (s.selectedCreature != null)
+        if (target != null)
         {
-            virtCam.LookAt = s.selectedCreature.gameObject.transform;
-            virtCam.Follow = s.selectedCreature.gameObject.transform;
+            virtCam.LookAt = target;
+            virtCam.Follow = target;
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             virtCam.LookAt = null;
             virtCam.Follow = null;

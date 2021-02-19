@@ -7,7 +7,7 @@ public class CreatureSelect : MonoBehaviour
 {
     public Creature selectedCreature;
 
-    public event Action OnCreatureSelect;
+    public event Action OnCreatureSelect, OnCreatureFollow;
 
     // Update is called once per frame
     void Update()
@@ -24,6 +24,22 @@ public class CreatureSelect : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 200.0f, layerMask))
             {
                 selectedCreature =  hit.collider.gameObject.GetComponent<Creature>();
+                OnCreatureSelect?.Invoke();
+                OnCreatureFollow?.Invoke();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            int layerId = 9;
+            int layerMask = 1 << layerId;
+
+            if (Physics.Raycast(ray, out hit, 200.0f, layerMask))
+            {
+                selectedCreature = hit.collider.gameObject.GetComponent<Creature>();
                 OnCreatureSelect?.Invoke();
             }
         }

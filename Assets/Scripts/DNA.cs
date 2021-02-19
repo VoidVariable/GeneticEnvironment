@@ -38,7 +38,7 @@ public class DNA
         DNA mutatedDNA = new DNA(
             (this.size + partnerDNA.size) / 2,
             (this.speed + partnerDNA.speed) / 2,
-            (this.health + partnerDNA.health) / 2);
+            (int)(this.health + partnerDNA.health) / 2);
         return mutatedDNA;
     }
 

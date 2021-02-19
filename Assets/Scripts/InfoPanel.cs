@@ -40,7 +40,7 @@ public class InfoPanel : MonoBehaviour
     private void PrintState()
     {
 
-        if(selected.Health <= -400)
+        if(selected.Health <= 0)
         {
             state.text = "DEAD";
             return;
